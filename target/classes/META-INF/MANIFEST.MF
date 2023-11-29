@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Main-Class: 
+Class-Path: jodd-core-5.1.6.jar jackson-dataformat-yaml-2.13.2.jar jodd-
+ bean-5.1.6.jar netty-resolver-dns-4.1.74.Final.jar rxjava-3.0.12.jar ne
+ tty-tcnative-classes-2.0.48.Final.jar byte-buddy-1.11.0.jar jboss-marsh
+ alling-2.0.11.Final.jar netty-handler-4.1.74.Final.jar netty-transport-
+ 4.1.74.Final.jar jboss-marshalling-river-2.0.11.Final.jar slf4j-api-2.0
+ .0-alpha6.jar jackson-annotations-2.13.2.jar reactive-streams-1.0.3.jar
+  netty-common-4.1.74.Final.jar jackson-core-2.13.2.jar jackson-databind
+ -2.13.2.2.jar cache-api-1.1.1.jar netty-buffer-4.1.74.Final.jar netty-r
+ esolver-4.1.74.Final.jar snakeyaml-1.19.jar redisson-3.17.0.jar reactor
+ -core-3.4.13.jar netty-codec-dns-4.1.74.Final.jar netty-codec-4.1.74.Fi
+ nal.jar
+
