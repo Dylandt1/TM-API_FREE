@@ -25,58 +25,54 @@ import java.sql.SQLException;
 
 public class SqlManager
 {
-    // Variables
-    private static String prefixTables = DBManager.FBG_DATABASE.getDbAccess().getCredentials().getPrefixTables();
-    private static String profilesTable = DBManager.FBG_DATABASE.getDbAccess().getCredentials().getProfilesTable();
-    private static String friendsTable = DBManager.FBG_DATABASE.getDbAccess().getCredentials().getFriendsTable();
-    private static String teamsTable = DBManager.FBG_DATABASE.getDbAccess().getCredentials().getTeamsTable();
-
     // Create tables in database
-    public static void createTables()
+    public static void createTables(String prefixTables, String profilesTable, String friendsTable, String teamsTable, String mailsTable)
     {
         //Send create profiles table
         update("CREATE TABLE IF NOT EXISTS "+prefixTables+profilesTable+" (" +
-                "id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-                "uuid VARCHAR(255), " +
-                "name VARCHAR(255), " +
-                "displayName VARCHAR(255), " +
-                "teamID VARCHAR(255), " +
-                "rankInTeam INT(11), " +
-                "fAllow INT(11), " +
-                "msgAllow INT(11)," +
-                "gpAllow INT(11)," +
-                "teamsAllow INT(11)," +
-                "opts VARCHAR(255))");
+                "id "+SqlType.INT.sql()+" NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+                "uuid "+SqlType.VARCHAR.sql()+", " +
+                "name "+SqlType.VARCHAR.sql()+", " +
+                "displayName "+SqlType.VARCHAR.sql()+", " +
+                "teamID "+SqlType.VARCHAR.sql()+", " +
+                "rankInTeam "+SqlType.INT.sql()+", " +
+                "fAllow "+SqlType.BOOLEAN.sql()+", " +
+                "msgAllow "+SqlType.BOOLEAN.sql()+", " +
+                "gpAllow "+SqlType.BOOLEAN.sql()+", " +
+                "teamsAllow "+SqlType.BOOLEAN.sql()+", " +
+                "opts "+SqlType.VARCHAR.sql()+")");
 
         //Send create friends list table
         update("CREATE TABLE IF NOT EXISTS "+prefixTables+friendsTable+" (" +
-                "uuid VARCHAR(255), " +
-                "friendUUID VARCHAR(255), " +
-                "friendName VARCHAR(255))");
+                "uuid "+SqlType.VARCHAR.sql()+", " +
+                "friendUUID "+SqlType.VARCHAR.sql()+", " +
+                "friendName "+SqlType.VARCHAR.sql()+", " +
+                "friendDisplayName "+SqlType.VARCHAR.sql()+")");
 
         //Send create teams table
         update("CREATE TABLE IF NOT EXISTS "+prefixTables+teamsTable+" (" +
-                "id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-                "teamId VARCHAR(255), " +
-                "teamName VARCHAR(255), " +
-                "teamLtr VARCHAR(255), " +
-                "leaderId VARCHAR(255), " +
-                "deputyId VARCHAR(255), " +
-                "teamRank VARCHAR(255), " +
-                "trophy INT(11), " +
-                "defaultRole int(11), " +
-                "prefixLeader VARCHAR(255), " +
-                "prefixDeputy VARCHAR(255), " +
-                "prefixAssistants VARCHAR(255), " +
-                "prefixMembers VARCHAR(255), " +
-                "prefixRecruits VARCHAR(255))");
-    }
+                "id "+SqlType.INT.sql()+" NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+                "teamId "+SqlType.VARCHAR.sql()+", " +
+                "teamName "+SqlType.VARCHAR.sql()+", " +
+                "teamPrefix "+SqlType.VARCHAR.sql()+", " +
+                "teamRank "+SqlType.VARCHAR.sql()+", " +
+                "trophy "+SqlType.INT.sql()+", " +
+                "defaultRole "+SqlType.TINYINT.sql("1")+", " +
+                "leaderId "+SqlType.VARCHAR.sql()+", " +
+                "deputyId "+SqlType.VARCHAR.sql()+", " +
+                "prefixLeader "+SqlType.VARCHAR.sql()+", " +
+                "prefixDeputy "+SqlType.VARCHAR.sql()+", " +
+                "prefixAssistants "+SqlType.VARCHAR.sql()+", " +
+                "prefixMembers "+SqlType.VARCHAR.sql()+", " +
+                "prefixRecruits "+SqlType.VARCHAR.sql()+")");
 
-    // Getters
-    public static String getPrefixTables() {return prefixTables;}
-    public static String getProfilesTable() {return profilesTable;}
-    public static String getFriendsTable() {return friendsTable;}
-    public static String getTeamsTable() {return teamsTable;}
+        //Send create mails table
+        update("CREATE TABLE IF NOT EXISTS "+prefixTables+mailsTable+" (" +
+                "of "+SqlType.VARCHAR.sql()+", " +
+                "to "+SqlType.VARCHAR.sql()+", " +
+                "cc "+SqlType.VARCHAR.sql()+", " +
+                "msg "+SqlType.VARCHAR.sql()+")");
+    }
 
     // Send query type executeUpdate
     public static void update(String query)

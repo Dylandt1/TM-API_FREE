@@ -9,8 +9,6 @@ import fr.tmmods.tmapi.data.manager.sql.SqlManager;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.SQLException;
-
 /**
  * This file is part of TM-API, a Spigot/BungeeCord API.
  *
@@ -35,8 +33,6 @@ public class TMSpigotAPI extends JavaPlugin
     private final String console = "§f[§cTM§f-§bAPI§f] -> ";
 
     public Configuration config;
-    public SqlManager sqlProfilesManager;
-    public SqlManager sqlFListManager;
     public static boolean redisEnable;
     public static boolean sqlEnable;
 
@@ -45,18 +41,24 @@ public class TMSpigotAPI extends JavaPlugin
     {
         getLogger().info(console + "§2Loading in progress...");
 
-        // UpdateChecker added by TM-API free software
+        // Check for update
         getLogger().info(console + "§6Checking for update...");
+        getLogger().info(console + " ");
+        getLogger().info(console + "§6Version §f: §2"+this.getDescription().getVersion());
+        getLogger().info(console + " ");
         new UpdateChecker(id).getVersion(version -> {
             if (this.getDescription().getVersion().equals(version)) {
                 getLogger().info(console + "§2Up to date §c!");
+                getLogger().info(console + " ");
             } else {
-                getLogger().info(console + "§6New update is available §c!");
+                getLogger().info(console + "§6New update is available §f: §2"+version);
+                getLogger().info(console + " ");
             }
         });
 
         //Config Files
         getLogger().info(console + "Loading config files...");
+        getLogger().info(console + " ");
         this.config = new ConfigsManager(this, "config").getConfig();
         redisEnable = config.getBoolean("redis.use");
         sqlEnable = config.getBoolean("mysql.use");
@@ -69,10 +71,18 @@ public class TMSpigotAPI extends JavaPlugin
 
         if(sqlEnable)
         {
+            String prefixTables = config.getString("mysql.prefixTables");
+            String profilesTable = config.getString("mysql.profilesTable");
+            String friendsTable = config.getString("mysql.friendsTable");
+            String teamsTable = config.getString("mysql.teamsTable");
+            String mailsTable = config.getString("mysql.mailsTable");
+
             getLogger().info(console + "Connecting to databases...");
+            getLogger().info(console + " ");
             DBManager.initAllConnections();
-            SqlManager.createTables();
+            SqlManager.createTables(prefixTables, profilesTable, friendsTable, teamsTable, mailsTable);
         }
+
         if(redisEnable)
         {
             getLogger().info(console + "Connecting to redis servers...");
@@ -88,6 +98,8 @@ public class TMSpigotAPI extends JavaPlugin
     public void onDisable()
     {
         getLogger().info(console + "§6Disabling in progress...");
+        getLogger().info(console + " ");
+
         if(sqlEnable) {
             getLogger().info(console + "§6Disconnect from Mysql server...");
             DBManager.closeAllConnections();
@@ -98,6 +110,7 @@ public class TMSpigotAPI extends JavaPlugin
             RedisManager.closeAllConnections();
         }
 
+        getLogger().info(console + " ");
         getLogger().info(console + "§cDisabled !");
     }
 }

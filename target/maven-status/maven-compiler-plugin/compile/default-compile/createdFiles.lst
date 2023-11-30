@@ -13,6 +13,7 @@ fr\tmmods\tmapi\bungee\config\ConfigsManager.class
 fr\tmmods\tmapi\data\manager\redis\RedisCredentials.class
 fr\tmmods\tmapi\bungee\data\manager\RedisManager.class
 fr\tmmods\tmapi\bungee\TMBungeeAPI.class
+fr\tmmods\tmapi\mails\Mail.class
 fr\tmmods\tmapi\data\manager\sql\DBAccess.class
 fr\tmmods\tmapi\data\manager\redis\RedisAccess.class
 fr\tmmods\tmapi\data\manager\UpdateChecker.class
@@ -24,4 +25,6 @@ fr\tmmods\tmapi\data\manager\Json\LocationSerializer.class
 fr\tmmods\tmapi\data\manager\Files.class
 fr\tmmods\tmapi\spigot\config\ConfigsManager.class
 fr\tmmods\tmapi\spigot\packets\Reflection.class
+fr\tmmods\tmapi\mails\MailProvider.class
 fr\tmmods\tmapi\spigot\data\manager\RedisManager.class
+fr\tmmods\tmapi\mails\MailManager.class

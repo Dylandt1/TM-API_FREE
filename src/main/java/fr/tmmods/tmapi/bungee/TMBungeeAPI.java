@@ -35,8 +35,6 @@ public class TMBungeeAPI extends Plugin
     public static String console = "[TM-API] -> ";
     private Configuration config;
 
-    public SqlManager sqlProfilesManager;
-    public SqlManager sqlFListManager;
     public static boolean redisEnable;
     public static boolean sqlEnable;
 
@@ -45,18 +43,24 @@ public class TMBungeeAPI extends Plugin
     {
         getLogger().info(console + "Loading in progress...");
 
-        // UpdateChecker added by TM-API free software
+        // Check for update
         getLogger().info(console + "Checking for update...");
+        getLogger().info(console + " ");
+        getLogger().info(console + "Version : "+this.getDescription().getVersion());
+        getLogger().info(console + " ");
         new UpdateChecker(id).getVersion(version -> {
           if (this.getDescription().getVersion().equals(version)) {
               getLogger().info(console + "Up to date !");
+              getLogger().info(console + " ");
           } else {
-              getLogger().info(console + "New update is available !");
+              getLogger().info(console + "New update is available : "+version);
+              getLogger().info(console + " ");
           }
         });
 
         //Config Files
         getLogger().info(console + "Loading config files...");
+        getLogger().info(console + " ");
         this.config = ConfigsManager.getConfig("config", this);
         redisEnable = config.getBoolean("redis.use");
         sqlEnable = config.getBoolean("mysql.use");
@@ -69,13 +73,22 @@ public class TMBungeeAPI extends Plugin
 
         if(sqlEnable)
         {
+            String prefixTables = config.getString("mysql.prefixTables");
+            String profilesTable = config.getString("mysql.profilesTable");
+            String friendsTable = config.getString("mysql.friendsTable");
+            String teamsTable = config.getString("mysql.teamsTable");
+            String mailsTable = config.getString("mysql.mailsTable");
+
             getLogger().info(console + "Connecting to databases...");
+            getLogger().info(console + " ");
             DBManager.initAllConnections();
-            SqlManager.createTables();
+            SqlManager.createTables(prefixTables, profilesTable, friendsTable, teamsTable, mailsTable);
         }
+
         if(redisEnable)
         {
             getLogger().info(console + "Connecting to redis servers...");
+            getLogger().info(console + " ");
             RedisManager.initAllConnections();
         }
 
@@ -89,14 +102,17 @@ public class TMBungeeAPI extends Plugin
     public void onDisable()
     {
         getLogger().info(console + "Disabling in progress...");
+        getLogger().info(console + " ");
 
         if(sqlEnable) {
             getLogger().info(console + "Disconnect from Mysql server...");
+            getLogger().info(console + " ");
             DBManager.closeAllConnections();
         }
 
         if(redisEnable) {
             getLogger().info(console + "Disconnect from Redisson server...");
+            getLogger().info(console + " ");
             RedisManager.closeAllConnections();
         }
 

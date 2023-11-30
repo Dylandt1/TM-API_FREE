@@ -53,24 +53,25 @@ mysql:                                                                          
   # Change to true for use DataBase connection :
   use: false
 
-  # database table prefix, leave blank so as not to use it :
-  prefixTables: "fbg_"
-
   # Name of the database to connect to, use the name of your database so that you don't have an error.
   # This parameter is the only one that requires you to intervene in your dataBase :
-  dbName: "bungee"
+  dbName: "friendsBG"
+
+  # Database table prefix, leave blank so as not to use it :
+  prefixTables: "fbg_"
 
   # Name of the mysql tables that the plugin will use to create it,
   # tableName is used to store all players profiles and friendsTable used to store all friends and associations players.
-  profilesTable: "fManager"
-  friendsTable: "fList"
-  teamsTable: "tManager"
+  profilesTable: "profilesManager"
+  friendsTable: "friendsManager"
+  teamsTable: "teamManager"
+  mailsTable: "mailsManager"
 
   # DataBase login, use your DataBase logins for connect this plugin to your DataBase :
   host: "localhost"
   port: 3306
-  user: "admin"
-  password: "P@ssw0rd"
+  user: "user"
+  password: "password"
 
   # This is number of pool connexions established by the plugin (Default : 10)
   maxPoolSize: 16 # Default Redis-server config
@@ -109,8 +110,8 @@ redis:                                                                          
   # Redisson login, use your Redisson logins for connect this plugin to your Redis server :
   host: "localhost"
   port: 6379
-  password: "1234"
-  clientName: "client"
+  password: "password"
+  clientName: "friendsBG"
 
   # DataBase connection pool used for get and set information :
   dataBase: 1 # Default = 1
@@ -133,8 +134,14 @@ updates:                                                                        
   # Turn to true for enable plugin updates checker (Available) :
   checker: true
 
-  # Turn to true for enable auto-updates (Not available) :
-  autoUpdate: false
+  # Send message to admins
+  adminMsg:
+    # Turn to true to enable update warning
+    use: false
+    # Message design
+    prefix: "&f[&6UpdateChecker&f] "
+    suffix: "&f&l->&f "
+    message: "&6New update is available !"
 
 
 # #################### API made by PataPom - Licensed under GPL3 License. #################### #

@@ -28,34 +28,41 @@ public enum SqlType
     TEXT("TEXT", "65535"),
     MEDIUMTEXT("MEDIUMTEXT", "16777215"),
     LONGTEXT("LONGTEXT", "4294967295"),
+
     TINYINT("TINYINT", "127"),
     SMALLINT("SMALLINT", "32767"),
-    INT("INT", "2147483647"),
-    INTEGER("INTEGER", "2147483647"),
+    INT("INT", "11"),
     MEDIUMINT("MEDIUMINT", "8388607"),
+    INTEGER("INTEGER", "2147483647"),
     BIGINT("BIGINT", "9223372036854775807"),
+
     FLOAT("FLOAT", null),
     DOUBLE("DOUBLE", null),
     DECIMAL("DECIMAL", null),
     NUMERIC("NUMERIC", null),
+
     REAL("REAL", null),
+
     DATE("DATE", null),
     DATETIME("DATETIME", null),
     TIME("TIME", null),
     TIMESTAMP("TIMESTAMP", null),
     YEAR("YEAR", null),
+
     VARBINARY("VARBINARY", "-999999999"),
     BINARY("BINARY", null),
+
     TINYBLOB("TINYBLOB", "255"),
     BLOB("BLOB", "65535"),
     MEDIUMBLOB("MEDIUMBLOB", "16777215"),
     LONGBLOB("LONGBLOB", "4294967295"),
+
     SET("SET", null),
     ENUM("ENUM", null),
     BOOLEAN("TINYINT", "1");
 
     private final String type;
-    private String spec;
+    private final String spec;
 
     SqlType(String type, String spec)
     {
@@ -65,5 +72,16 @@ public enum SqlType
 
     public String getType() {return type;}
     public String getSpec() {return spec;}
-    public String fromString() {return type+"("+this.spec+")";}
+
+    public String sql()
+    {
+        if(spec == null) return type;
+        return type+"("+spec+")";
+    }
+
+    public String sql(String customSpec)
+    {
+        if(customSpec == null) return type;
+        return type+"("+customSpec+")";
+    }
 }

@@ -28,11 +28,11 @@ public class UpdateChecker
     /**
      * To use this update checker for your plugins, you can add the following code in onEnable @Override methods with your plugins ids on spigot.org.
      *
-     * new UpdateChecker(0).getVersion(version -> {
+     * new UpdateChecker(pluginId).getVersion(version -> {
      *     if (this.getDescription().getVersion().equals(version)) {
      *         getLogger().info("There is not a new update available.");
      *     }else {
-     *         getLogger().info("There is a new update available.");
+     *         getLogger().info("New update available !");
      *     }
      * });
      */
@@ -50,9 +50,9 @@ public class UpdateChecker
     {
         if(id == 0) return;
 
-        try (InputStream is = new URL(apiURL).openStream(); Scanner scann = new Scanner(is))
+        try (InputStream is = new URL(apiURL).openStream(); Scanner scanner = new Scanner(is))
         {
-            if (scann.hasNext()) {consumer.accept(scann.next());}
+            if (scanner.hasNext()) {consumer.accept(scanner.next());}
         } catch (IOException e) {
             new RuntimeException("Unable to check for updates: " + e.getMessage());
         }
