@@ -37,7 +37,8 @@ public enum DBManager
             TMSpigotAPI.getInstance().config.getString("mysql.prefixTables"),
             TMSpigotAPI.getInstance().config.getString("mysql.profilesTable"),
             TMSpigotAPI.getInstance().config.getString("mysql.friendsTable"),
-            TMSpigotAPI.getInstance().config.getString("mysql.teamsTable")));
+            TMSpigotAPI.getInstance().config.getString("mysql.teamsTable"),
+            TMSpigotAPI.getInstance().config.getString("mysql.mailsTable")));
 
     private final DBAccess dbAccess;
 

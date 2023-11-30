@@ -33,8 +33,9 @@ public class DBCredentials
     private String profilesTable;
     private String friendsTable;
     private String teamsTable;
+    private String mailsTable;
 
-    public DBCredentials(String host, int port, String dbName, String user, String password, int maxPoolSize, int maxLifeTime, int poolTimeOut, int dataLeak, int timeOut, String prefixTables, String profilesTable, String friendsTable, String teamsTable)
+    public DBCredentials(String host, int port, String dbName, String user, String password, int maxPoolSize, int maxLifeTime, int poolTimeOut, int dataLeak, int timeOut, String prefixTables, String profilesTable, String friendsTable, String teamsTable, String mailsTable)
     {
         this.host = host;
         this.port = port;
@@ -50,6 +51,7 @@ public class DBCredentials
         this.profilesTable = profilesTable;
         this.friendsTable = friendsTable;
         this.teamsTable = teamsTable;
+        this.mailsTable = mailsTable;
     }
 
     public String getHost() {return host;}
@@ -66,6 +68,7 @@ public class DBCredentials
     public String getProfilesTable() {return profilesTable;}
     public String getFriendsTable() {return friendsTable;}
     public String getTeamsTable() {return teamsTable;}
+    public String getMailsTable() {return mailsTable;}
 
     public String toURI() {return "jdbc:mysql://" + host + ":" + port + "/" + dbName;}
 }

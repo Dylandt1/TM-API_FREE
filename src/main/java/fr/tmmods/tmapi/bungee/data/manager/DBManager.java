@@ -36,7 +36,8 @@ public enum DBManager
             TMBungeeAPI.getInstance().getConfig().getString("mysql.prefixTables"),
             TMBungeeAPI.getInstance().getConfig().getString("mysql.profilesTable"),
             TMBungeeAPI.getInstance().getConfig().getString("mysql.friendsTable"),
-            TMBungeeAPI.getInstance().getConfig().getString("mysql.teamsTable")));
+            TMBungeeAPI.getInstance().getConfig().getString("mysql.teamsTable"),
+            TMBungeeAPI.getInstance().getConfig().getString("mysql.mailsTable")));
 
     private final DBAccess dbAccess;
 

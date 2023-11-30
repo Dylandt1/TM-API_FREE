@@ -68,8 +68,8 @@ public class SqlManager
 
         //Send create mails table
         update("CREATE TABLE IF NOT EXISTS "+prefixTables+mailsTable+" (" +
-                "of "+SqlType.VARCHAR.sql()+", " +
-                "to "+SqlType.VARCHAR.sql()+", " +
+                "sender "+SqlType.VARCHAR.sql()+", " +
+                "target "+SqlType.VARCHAR.sql()+", " +
                 "cc "+SqlType.VARCHAR.sql()+", " +
                 "msg "+SqlType.VARCHAR.sql()+")");
     }

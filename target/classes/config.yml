@@ -134,7 +134,7 @@ updates:                                                                        
   # Turn to true for enable plugin updates checker (Available) :
   checker: true
 
-  # Send message to admins
+  # Send message to admins (not available) :
   adminMsg:
     # Turn to true to enable update warning
     use: false
