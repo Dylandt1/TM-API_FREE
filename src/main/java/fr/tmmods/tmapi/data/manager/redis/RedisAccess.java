@@ -46,7 +46,11 @@ public class RedisAccess
         config.setCodec(new JsonJacksonCodec());
         config.setThreads(credentials.getThreads());
         config.setNettyThreads(credentials.getNettyThreads());
-        ((SingleServerConfig)(config.useSingleServer().setAddress(credentials.getUrl()).setPassword(credentials.getPassword())).setClientName(credentials.getClientName())).setDatabase(credentials.getDataBase());
+        ((SingleServerConfig)(config.useSingleServer()
+                .setAddress(credentials.getUrl())
+                .setPassword(credentials.getPassword()))
+                .setClientName(credentials.getClientName()))
+                .setDatabase(credentials.getDataBase());
         this.redisCli = Redisson.create(config);
     }
 }

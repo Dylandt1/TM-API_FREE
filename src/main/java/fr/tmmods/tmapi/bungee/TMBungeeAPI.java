@@ -9,8 +9,6 @@ import fr.tmmods.tmapi.data.manager.sql.SqlManager;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 
-import java.sql.SQLException;
-
 /**
  * This file is part of TM-API, a Spigot/BungeeCord API.
  *
@@ -41,7 +39,9 @@ public class TMBungeeAPI extends Plugin
     @Override
     public void onLoad()
     {
+        getLogger().info(console + " ");
         getLogger().info(console + "Loading in progress...");
+        getLogger().info(console + " ");
 
         // Check for update
         getLogger().info(console + "Checking for update...");
@@ -79,6 +79,7 @@ public class TMBungeeAPI extends Plugin
             String teamsTable = config.getString("mysql.teamsTable");
             String mailsTable = config.getString("mysql.mailsTable");
 
+            getLogger().info(console + " ");
             getLogger().info(console + "Connecting to databases...");
             getLogger().info(console + " ");
             DBManager.initAllConnections();
@@ -87,11 +88,13 @@ public class TMBungeeAPI extends Plugin
 
         if(redisEnable)
         {
+            getLogger().info(console + " ");
             getLogger().info(console + "Connecting to redis servers...");
             getLogger().info(console + " ");
             RedisManager.initAllConnections();
         }
 
+        getLogger().info(console + " ");
         getLogger().info(console + "Ready to use !");
     }
 
