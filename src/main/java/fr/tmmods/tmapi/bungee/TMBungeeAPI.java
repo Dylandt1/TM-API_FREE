@@ -6,8 +6,14 @@ import fr.tmmods.tmapi.bungee.data.manager.RedisManager;
 import fr.tmmods.tmapi.data.manager.UpdateChecker;
 import fr.tmmods.tmapi.data.manager.sql.SqlManager;
 
+import fr.tmmods.tmapi.data.manager.sql.SqlType;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This file is part of TM-API, a Spigot/BungeeCord API.
@@ -83,7 +89,7 @@ public class TMBungeeAPI extends Plugin
             getLogger().info(console + "Connecting to databases...");
             getLogger().info(console + " ");
             DBManager.initAllConnections();
-            SqlManager.createTables(prefixTables, profilesTable, friendsTable, teamsTable, mailsTable);
+            createTables();
         }
 
         if(redisEnable)
@@ -120,5 +126,34 @@ public class TMBungeeAPI extends Plugin
         }
 
         getLogger().info(console + "Disabled !");
+    }
+
+    private void createTables()
+    {
+        Map<String, List<String>> tables = new HashMap<>();
+
+        String prefixTables = config.getString("mysql.prefixTables");
+        String serversTable = config.getString("mysql.serversTable");
+        String mailsTable = config.getString("mysql.mailsTable");
+
+        List<String> listServersTable = Arrays.asList(
+                "id "+ SqlType.INT.sql()+" NOT NULL AUTO_INCREMENT PRIMARY KEY",
+                "name "+SqlType.VARCHAR.sql(),
+                "status "+SqlType.TINYINT.sql(1),
+                "ip "+SqlType.VARCHAR.sql(),
+                "port "+SqlType.INT.sql()
+        );
+
+        List<String> listMailsTable = Arrays.asList(
+                "sender "+SqlType.VARCHAR.sql(),
+                "target "+SqlType.VARCHAR.sql(),
+                "cc "+SqlType.VARCHAR.sql(),
+                "message "+SqlType.VARCHAR.sql()
+        );
+
+        tables.put(serversTable, listServersTable);
+        tables.put(mailsTable, listMailsTable);
+
+        SqlManager.createTables(prefixTables, tables);
     }
 }

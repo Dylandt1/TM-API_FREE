@@ -19,7 +19,6 @@ import com.google.common.annotations.Beta;
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-@Beta
 public enum SqlType
 {
     CHAR("CHAR", "255"),
@@ -70,6 +69,12 @@ public enum SqlType
         this.spec = spec;
     }
 
+    SqlType(String type, int spec)
+    {
+        this.type = type;
+        this.spec = String.valueOf(spec);
+    }
+
     public String getType() {return type;}
     public String getSpec() {return spec;}
 
@@ -82,6 +87,11 @@ public enum SqlType
     public String sql(String customSpec)
     {
         if(customSpec == null) return type;
+        return type+"("+customSpec+")";
+    }
+
+    public String sql(int customSpec)
+    {
         return type+"("+customSpec+")";
     }
 }

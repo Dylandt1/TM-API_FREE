@@ -5,6 +5,8 @@ import fr.tmmods.tmapi.bungee.data.manager.DBManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This file is part of TM-API, a Spigot/BungeeCord API.
@@ -25,55 +27,82 @@ import java.sql.SQLException;
 
 public class SqlManager
 {
-    // Create tables in database
-    public static void createTables(String prefixTables, String profilesTable, String friendsTable, String teamsTable, String mailsTable)
+    /* Create tables in database with this method or use directly update() method
+
+    To use this method, implement this code in yours main classes or adapt to your uses :
+
+    Map<String, List<String>> tables = new HashMap<>();
+
+    String prefixTables = "fbg_"
+    String exampleTable1 = "table1";
+    String exampleTable2 = "table2";
+
+    List<String> exampleEntries1 = Arrays.asList(
+            "id "+SqlType.INT.sql()+" NOT NULL AUTO_INCREMENT PRIMARY KEY",
+            "name "+SqlType.VARCHAR.sql(),
+            "displayName "+SqlType.VARCHAR.sql(),
+            "isOP "+SqlType.BOOLEAN.sql(),
+            "money "+SqlType.DOUBLE.sql()
+    );
+
+    List<String> exampleEntries2 = Arrays.asList(
+            "id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY",
+            "name VARCHAR(255)",
+            "displayName VARCHAR(255)",
+            "isOP TINYINT(1)",
+            "money DOUBLE"
+    );
+
+    tables.put(exampleTable1, exampleEntries1);
+    tables.put(exampleTable2, exampleEntries2);
+    createTables(prefixTables, tables);
+
+     */
+    public static void createTables(String prefixTables, Map<String, List<String>> tables)
     {
-        //Send create profiles table
-        update("CREATE TABLE IF NOT EXISTS "+prefixTables+profilesTable+" (" +
-                "id "+SqlType.INT.sql()+" NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-                "uuid "+SqlType.VARCHAR.sql()+", " +
-                "name "+SqlType.VARCHAR.sql()+", " +
-                "displayName "+SqlType.VARCHAR.sql()+", " +
-                "rankInTeam "+SqlType.INT.sql()+", " +
-                "teamID "+SqlType.VARCHAR.sql()+", " +
-                "groupID "+SqlType.VARCHAR.sql()+", " +
-                "fAllow "+SqlType.BOOLEAN.sql()+", " +
-                "msgAllow "+SqlType.BOOLEAN.sql()+", " +
-                "gpAllow "+SqlType.BOOLEAN.sql()+", " +
-                "teamsAllow "+SqlType.BOOLEAN.sql()+", " +
-                "lastJoin "+SqlType.TIMESTAMP.sql()+", " +
-                "firstJoin "+SqlType.TIMESTAMP.sql()+")");
+        for(String tableName : tables.keySet())
+        {
+            List<String> list = tables.get(tableName);
 
-        //Send create friends list table
-        update("CREATE TABLE IF NOT EXISTS "+prefixTables+friendsTable+" (" +
-                "uuid "+SqlType.VARCHAR.sql()+", " +
-                "friendUUID "+SqlType.VARCHAR.sql()+", " +
-                "friendName "+SqlType.VARCHAR.sql()+", " +
-                "friendDisplayName "+SqlType.VARCHAR.sql()+")");
+            StringBuilder sb = new StringBuilder();
 
-        //Send create teams table
-        update("CREATE TABLE IF NOT EXISTS "+prefixTables+teamsTable+" (" +
-                "id "+SqlType.INT.sql()+" NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-                "teamId "+SqlType.VARCHAR.sql()+", " +
-                "teamName "+SqlType.VARCHAR.sql()+", " +
-                "teamPrefix "+SqlType.VARCHAR.sql()+", " +
-                "teamRank "+SqlType.VARCHAR.sql()+", " +
-                "trophy "+SqlType.INT.sql()+", " +
-                "defaultRole "+SqlType.TINYINT.sql("1")+", " +
-                "leaderId "+SqlType.VARCHAR.sql()+", " +
-                "deputyId "+SqlType.VARCHAR.sql()+", " +
-                "prefixLeader "+SqlType.VARCHAR.sql()+", " +
-                "prefixDeputy "+SqlType.VARCHAR.sql()+", " +
-                "prefixAssistants "+SqlType.VARCHAR.sql()+", " +
-                "prefixMembers "+SqlType.VARCHAR.sql()+", " +
-                "prefixRecruits "+SqlType.VARCHAR.sql()+")");
+            for(int i = 0; i != list.size(); i++)
+            {
+                sb.append(list.get(i)).append(", ");
+            }
 
-        //Send create mails table
-        update("CREATE TABLE IF NOT EXISTS "+prefixTables+mailsTable+" (" +
-                "sender "+SqlType.VARCHAR.sql()+", " +
-                "target "+SqlType.VARCHAR.sql()+", " +
-                "cc "+SqlType.VARCHAR.sql()+", " +
-                "msg "+SqlType.VARCHAR.sql()+")");
+            update("CREATE TABLE IF NOT EXISTS "+prefixTables+tableName+" ("+sb.substring(0, sb.length() -2)+")");
+        }
+    }
+
+    /* Create one table in database with this method.
+
+    To use this method, implement this code in yours main classes or adapt to your uses :
+
+    String prefixTables = "prefixTables";
+    String serversTable = "tableName";
+
+    List<String> entries = Arrays.asList(
+            "id "+ SqlType.INT.sql()+" NOT NULL AUTO_INCREMENT PRIMARY KEY",
+            "name "+SqlType.VARCHAR.sql(),
+            "displayName "+SqlType.VARCHAR.sql(),
+            "isOP "+SqlType.BOOLEAN.sql(),
+            "money "+SqlType.DOUBLE.sql()
+    );
+
+    SqlManager.createTable(prefixTables, tableName, entries);
+
+     */
+    public static void createTable(String prefixTables, String tableName, List<String> entries)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        for(int i = 0; i != entries.size(); i++)
+        {
+            sb.append(entries.get(i)).append(", ");
+        }
+
+        update("CREATE TABLE IF NOT EXISTS "+prefixTables+tableName+" ("+sb.substring(0, sb.length() -2)+")");
     }
 
     // Send query type executeUpdate
