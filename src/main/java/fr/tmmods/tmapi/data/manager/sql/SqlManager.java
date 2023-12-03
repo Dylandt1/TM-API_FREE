@@ -34,13 +34,15 @@ public class SqlManager
                 "uuid "+SqlType.VARCHAR.sql()+", " +
                 "name "+SqlType.VARCHAR.sql()+", " +
                 "displayName "+SqlType.VARCHAR.sql()+", " +
-                "teamID "+SqlType.VARCHAR.sql()+", " +
                 "rankInTeam "+SqlType.INT.sql()+", " +
+                "teamID "+SqlType.VARCHAR.sql()+", " +
+                "groupID "+SqlType.VARCHAR.sql()+", " +
                 "fAllow "+SqlType.BOOLEAN.sql()+", " +
                 "msgAllow "+SqlType.BOOLEAN.sql()+", " +
                 "gpAllow "+SqlType.BOOLEAN.sql()+", " +
                 "teamsAllow "+SqlType.BOOLEAN.sql()+", " +
-                "opts "+SqlType.VARCHAR.sql()+")");
+                "lastJoin "+SqlType.TIMESTAMP.sql()+", " +
+                "firstJoin "+SqlType.TIMESTAMP.sql()+")");
 
         //Send create friends list table
         update("CREATE TABLE IF NOT EXISTS "+prefixTables+friendsTable+" (" +

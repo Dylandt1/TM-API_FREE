@@ -25,6 +25,4 @@ fr\tmmods\tmapi\data\manager\Json\LocationSerializer.class
 fr\tmmods\tmapi\data\manager\Files.class
 fr\tmmods\tmapi\spigot\config\ConfigsManager.class
 fr\tmmods\tmapi\spigot\packets\Reflection.class
-fr\tmmods\tmapi\mails\MailProvider.class
 fr\tmmods\tmapi\spigot\data\manager\RedisManager.class
-fr\tmmods\tmapi\mails\MailManager.class
