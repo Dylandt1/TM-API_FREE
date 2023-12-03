@@ -39,8 +39,8 @@ mysql:                                                                          
 # ------------------------------------------------------------------------------------- #
 
   # Prefix and suffix MySQL console and chat messages :
-  prefix: "&f[&3MySQL&f]"
-  suffix: "&f&l->&f"
+  prefix: "&f[&3MySQL&f] "
+  suffix: "&f&l->&f "
 
   # Message success connect/disconnect :
   connectSuccess: "&2Successful connection &c!"
@@ -57,15 +57,14 @@ mysql:                                                                          
   # This parameter is the only one that requires you to intervene in your dataBase :
   dbName: "friendsBG"
 
-  # Database table prefix, leave blank so as not to use it :
-  prefixTables: "fbg_"
+  # Database tables prefix, leave blank so as not to use it :
+  prefixTables: "tm_"
 
-  # Name of the mysql tables that the plugin will use to create it,
-  # tableName is used to store all players profiles and friendsTable used to store all friends and associations players.
-  profilesTable: "profilesManager"
-  friendsTable: "friendsManager"
-  teamsTable: "teamManager"
-  mailsTable: "mailsManager"
+  # Name of servers table, this table store all servers data to on-demand servers system :
+  serversTable: "servers"
+
+  # Name of mails table, this table store all mails data :
+  mailsTable: "mails"
 
   # DataBase login, use your DataBase logins for connect this plugin to your DataBase :
   host: "localhost"

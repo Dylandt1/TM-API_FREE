@@ -33,12 +33,7 @@ public enum DBManager
             TMSpigotAPI.getInstance().config.getInt("mysql.maxLifeTime"),
             TMSpigotAPI.getInstance().config.getInt("mysql.poolTimeout"),
             TMSpigotAPI.getInstance().config.getInt("mysql.dataleak"),
-            TMSpigotAPI.getInstance().config.getInt("mysql.timeout"),
-            TMSpigotAPI.getInstance().config.getString("mysql.prefixTables"),
-            TMSpigotAPI.getInstance().config.getString("mysql.profilesTable"),
-            TMSpigotAPI.getInstance().config.getString("mysql.friendsTable"),
-            TMSpigotAPI.getInstance().config.getString("mysql.teamsTable"),
-            TMSpigotAPI.getInstance().config.getString("mysql.mailsTable")));
+            TMSpigotAPI.getInstance().config.getInt("mysql.timeout")));
 
     private final DBAccess dbAccess;
 

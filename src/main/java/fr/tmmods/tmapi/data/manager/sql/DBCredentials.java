@@ -29,13 +29,8 @@ public class DBCredentials
     private int poolTimeOut;
     private int dataLeak;
     private int timeOut;
-    private String prefixTables;
-    private String profilesTable;
-    private String friendsTable;
-    private String teamsTable;
-    private String mailsTable;
 
-    public DBCredentials(String host, int port, String dbName, String user, String password, int maxPoolSize, int maxLifeTime, int poolTimeOut, int dataLeak, int timeOut, String prefixTables, String profilesTable, String friendsTable, String teamsTable, String mailsTable)
+    public DBCredentials(String host, int port, String dbName, String user, String password, int maxPoolSize, int maxLifeTime, int poolTimeOut, int dataLeak, int timeOut)
     {
         this.host = host;
         this.port = port;
@@ -47,11 +42,6 @@ public class DBCredentials
         this.poolTimeOut = poolTimeOut;
         this.dataLeak = dataLeak;
         this.timeOut = timeOut;
-        this.prefixTables = prefixTables;
-        this.profilesTable = profilesTable;
-        this.friendsTable = friendsTable;
-        this.teamsTable = teamsTable;
-        this.mailsTable = mailsTable;
     }
 
     public String getHost() {return host;}
@@ -64,11 +54,6 @@ public class DBCredentials
     public int getPoolTimeOut() {return poolTimeOut;}
     public int getDataLeak() {return dataLeak;}
     public int getTimeOut() {return timeOut;}
-    public String getPrefixTables() {return prefixTables;}
-    public String getProfilesTable() {return profilesTable;}
-    public String getFriendsTable() {return friendsTable;}
-    public String getTeamsTable() {return teamsTable;}
-    public String getMailsTable() {return mailsTable;}
 
     public String toURI() {return "jdbc:mysql://" + host + ":" + port + "/" + dbName;}
 }

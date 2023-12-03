@@ -32,12 +32,7 @@ public enum DBManager
             TMBungeeAPI.getInstance().getConfig().getInt("mysql.maxLifeTime"),
             TMBungeeAPI.getInstance().getConfig().getInt("mysql.poolTimeout"),
             TMBungeeAPI.getInstance().getConfig().getInt("mysql.dataleak"),
-            TMBungeeAPI.getInstance().getConfig().getInt("mysql.timeout"),
-            TMBungeeAPI.getInstance().getConfig().getString("mysql.prefixTables"),
-            TMBungeeAPI.getInstance().getConfig().getString("mysql.profilesTable"),
-            TMBungeeAPI.getInstance().getConfig().getString("mysql.friendsTable"),
-            TMBungeeAPI.getInstance().getConfig().getString("mysql.teamsTable"),
-            TMBungeeAPI.getInstance().getConfig().getString("mysql.mailsTable")));
+            TMBungeeAPI.getInstance().getConfig().getInt("mysql.timeout")));
 
     private final DBAccess dbAccess;
 

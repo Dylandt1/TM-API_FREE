@@ -1,5 +1,6 @@
 package fr.tmmods.tmapi.spigot;
 
+import fr.tmmods.tmapi.data.manager.sql.SqlType;
 import fr.tmmods.tmapi.spigot.config.ConfigsManager;
 import fr.tmmods.tmapi.spigot.data.manager.DBManager;
 import fr.tmmods.tmapi.spigot.data.manager.RedisManager;
@@ -8,6 +9,11 @@ import fr.tmmods.tmapi.data.manager.sql.SqlManager;
 
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This file is part of TM-API, a Spigot/BungeeCord API.
@@ -71,16 +77,10 @@ public class TMSpigotAPI extends JavaPlugin
 
         if(sqlEnable)
         {
-            String prefixTables = config.getString("mysql.prefixTables");
-            String profilesTable = config.getString("mysql.profilesTable");
-            String friendsTable = config.getString("mysql.friendsTable");
-            String teamsTable = config.getString("mysql.teamsTable");
-            String mailsTable = config.getString("mysql.mailsTable");
-
             getLogger().info(console + "Connecting to databases...");
             getLogger().info(console + " ");
             DBManager.initAllConnections();
-            SqlManager.createTables(prefixTables, profilesTable, friendsTable, teamsTable, mailsTable);
+            createTables();
         }
 
         if(redisEnable)
@@ -112,5 +112,34 @@ public class TMSpigotAPI extends JavaPlugin
 
         getLogger().info(console + " ");
         getLogger().info(console + "§cDisabled !");
+    }
+
+    private void createTables()
+    {
+        Map<String, List<String>> tables = new HashMap<>();
+
+        String prefixTables = config.getString("mysql.prefixTables");
+        String serversTable = config.getString("mysql.serversTable");
+        String mailsTable = config.getString("mysql.mailsTable");
+
+        List<String> listServersTable = Arrays.asList(
+                "id "+ SqlType.INT.sql()+" NOT NULL AUTO_INCREMENT PRIMARY KEY",
+                "name "+SqlType.VARCHAR.sql(),
+                "status "+SqlType.TINYINT.sql(1),
+                "ip "+SqlType.VARCHAR.sql(),
+                "port "+SqlType.INT.sql()
+        );
+
+        List<String> listMailsTable = Arrays.asList(
+                "sender "+SqlType.VARCHAR.sql(),
+                "target "+SqlType.VARCHAR.sql(),
+                "cc "+SqlType.VARCHAR.sql(),
+                "message "+SqlType.VARCHAR.sql()
+        );
+
+        tables.put(serversTable, listServersTable);
+        tables.put(mailsTable, listMailsTable);
+
+        SqlManager.createTables(prefixTables, tables);
     }
 }
