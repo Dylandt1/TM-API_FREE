@@ -32,7 +32,7 @@
 
     <build>
         <defaultGoal>clean package</defaultGoal>
-        <finalName>${project.name}_${project.version}-${plugin.state}_${minecraft.version}</finalName>
+        <finalName>${project.name}-${project.version}-${plugin.state}</finalName>
 
         <plugins>
             <plugin>

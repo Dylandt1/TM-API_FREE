@@ -19,7 +19,7 @@ import java.util.UUID;
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-public class ProfileNotFoundException extends Exception
+public class ManagerNotFoundException extends Exception
 {
-    public ProfileNotFoundException(UUID uuid) {super("This manager doesn't find on this server §c!");}
+    public ManagerNotFoundException(UUID uuid) {super("This profile doesn't find on this server §c!");}
 }
