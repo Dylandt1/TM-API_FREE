@@ -15,6 +15,6 @@ hs_err_pid*
 ## Directory-based project format:
 /.idea/
 /target/
-/src/main/java/fr/tmmods/tmapi/mails/MailManager.java
-/src/main/java/fr/tmmods/tmapi/mails/MailProvider.java
+/src/main/java/fr/tmmods/tmapi/mailling/MailManager.java
+/src/main/java/fr/tmmods/tmapi/mailling/MailProvider.java
 

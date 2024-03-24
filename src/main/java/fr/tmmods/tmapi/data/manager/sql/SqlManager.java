@@ -1,7 +1,5 @@
 package fr.tmmods.tmapi.data.manager.sql;
 
-import fr.tmmods.tmapi.bungee.data.manager.DBManager;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -58,7 +56,15 @@ public class SqlManager
     createTables(prefixTables, tables);
 
      */
-    public static void createTables(String prefixTables, Map<String, List<String>> tables)
+
+    private final Connection connection;
+
+    public SqlManager(Connection connection)
+    {
+        this.connection = connection;
+    }
+
+    public void createTables(String prefixTables, Map<String, List<String>> tables)
     {
         for(String tableName : tables.keySet())
         {
@@ -93,7 +99,7 @@ public class SqlManager
     SqlManager.createTable(prefixTables, tableName, entries);
 
      */
-    public static void createTable(String prefixTables, String tableName, List<String> entries)
+    public void createTable(String prefixTables, String tableName, List<String> entries)
     {
         StringBuilder sb = new StringBuilder();
 
@@ -106,11 +112,10 @@ public class SqlManager
     }
 
     // Send query type executeUpdate
-    public static void update(String query)
+    public void update(String query)
     {
         try
         {
-            Connection connection = DBManager.FBG_DATABASE.getDbAccess().getConnection();
             PreparedStatement ps = connection.prepareStatement(query);
             ps.executeUpdate();
             ps.close();
@@ -121,11 +126,10 @@ public class SqlManager
     }
 
     // Send query type executeQuery
-    public static void query(String query)
+    public void query(String query)
     {
         try
         {
-            Connection connection = DBManager.FBG_DATABASE.getDbAccess().getConnection();
             PreparedStatement ps = connection.prepareStatement(query);
             ps.executeQuery();
             ps.close();
@@ -138,10 +142,9 @@ public class SqlManager
     }
 
     // Send query type execute
-    public static void execute(String query)
+    public void execute(String query)
     {
         try {
-            Connection connection = DBManager.FBG_DATABASE.getDbAccess().getConnection();
             PreparedStatement ps = connection.prepareStatement(query);
             ps.execute();
             ps.close();

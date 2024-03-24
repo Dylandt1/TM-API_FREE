@@ -1,19 +1,10 @@
 package fr.tmmods.tmapi.spigot;
 
-import fr.tmmods.tmapi.data.manager.sql.SqlType;
 import fr.tmmods.tmapi.spigot.config.ConfigsManager;
-import fr.tmmods.tmapi.spigot.data.manager.DBManager;
-import fr.tmmods.tmapi.spigot.data.manager.RedisManager;
 import fr.tmmods.tmapi.data.manager.UpdateChecker;
-import fr.tmmods.tmapi.data.manager.sql.SqlManager;
 
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * This file is part of TM-API, a Spigot/BungeeCord API.
@@ -39,8 +30,6 @@ public class TMSpigotAPI extends JavaPlugin
     private final String console = "§f[§cTM§f-§bAPI§f] -> ";
 
     public Configuration config;
-    public static boolean redisEnable;
-    public static boolean sqlEnable;
 
     @Override
     public void onLoad()
@@ -49,46 +38,29 @@ public class TMSpigotAPI extends JavaPlugin
 
         // Check for update
         getLogger().info(console + "§6Checking for update...");
-        getLogger().info(console + " ");
+        getLogger().info(" ");
         getLogger().info(console + "§6Version §f: §2"+this.getDescription().getVersion());
-        getLogger().info(console + " ");
+        getLogger().info( " ");
         new UpdateChecker(id).getVersion(version -> {
             if (this.getDescription().getVersion().equals(version)) {
                 getLogger().info(console + "§2Up to date §c!");
-                getLogger().info(console + " ");
+                getLogger().info(" ");
             } else {
                 getLogger().info(console + "§6New update is available §f: §2"+version);
-                getLogger().info(console + " ");
+                getLogger().info(" ");
             }
         });
 
         //Config Files
         getLogger().info(console + "Loading config files...");
-        getLogger().info(console + " ");
+        getLogger().info(" ");
         this.config = new ConfigsManager(this, "config").getConfig();
-        redisEnable = config.getBoolean("redis.use");
-        sqlEnable = config.getBoolean("mysql.use");
     }
 
     @Override
     public void onEnable()
     {
         INSTANCE = this;
-
-        if(sqlEnable)
-        {
-            getLogger().info(console + "Connecting to databases...");
-            getLogger().info(console + " ");
-            DBManager.initAllConnections();
-            createTables();
-        }
-
-        if(redisEnable)
-        {
-            getLogger().info(console + "Connecting to redis servers...");
-            RedisManager.initAllConnections();
-        }
-
         getLogger().info(console + "§2Ready to use §c!");
     }
 
@@ -98,48 +70,7 @@ public class TMSpigotAPI extends JavaPlugin
     public void onDisable()
     {
         getLogger().info(console + "§6Disabling in progress...");
-        getLogger().info(console + " ");
-
-        if(sqlEnable) {
-            getLogger().info(console + "§6Disconnect from Mysql server...");
-            DBManager.closeAllConnections();
-        }
-
-        if(redisEnable) {
-            getLogger().info(console + "§6Disconnect fom Redisson server...");
-            RedisManager.closeAllConnections();
-        }
-
-        getLogger().info(console + " ");
+        getLogger().info(" ");
         getLogger().info(console + "§cDisabled !");
-    }
-
-    private void createTables()
-    {
-        Map<String, List<String>> tables = new HashMap<>();
-
-        String prefixTables = config.getString("mysql.prefixTables");
-        String serversTable = config.getString("mysql.serversTable");
-        String mailsTable = config.getString("mysql.mailsTable");
-
-        List<String> listServersTable = Arrays.asList(
-                "id "+ SqlType.INT.sql()+" NOT NULL AUTO_INCREMENT PRIMARY KEY",
-                "name "+SqlType.VARCHAR.sql(),
-                "status "+SqlType.TINYINT.sql(1),
-                "ip "+SqlType.VARCHAR.sql(),
-                "port "+SqlType.INT.sql()
-        );
-
-        List<String> listMailsTable = Arrays.asList(
-                "sender "+SqlType.VARCHAR.sql(),
-                "target "+SqlType.VARCHAR.sql(),
-                "cc "+SqlType.VARCHAR.sql(),
-                "message "+SqlType.VARCHAR.sql()
-        );
-
-        tables.put(serversTable, listServersTable);
-        tables.put(mailsTable, listMailsTable);
-
-        SqlManager.createTables(prefixTables, tables);
     }
 }

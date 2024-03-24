@@ -1,19 +1,10 @@
 package fr.tmmods.tmapi.bungee;
 
 import fr.tmmods.tmapi.bungee.config.ConfigsManager;
-import fr.tmmods.tmapi.bungee.data.manager.DBManager;
-import fr.tmmods.tmapi.bungee.data.manager.RedisManager;
 import fr.tmmods.tmapi.data.manager.UpdateChecker;
-import fr.tmmods.tmapi.data.manager.sql.SqlManager;
 
-import fr.tmmods.tmapi.data.manager.sql.SqlType;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * This file is part of TM-API, a Spigot/BungeeCord API.
@@ -39,69 +30,40 @@ public class TMBungeeAPI extends Plugin
     public static String console = "[TM-API] -> ";
     private Configuration config;
 
-    public static boolean redisEnable;
-    public static boolean sqlEnable;
-
     @Override
     public void onLoad()
     {
-        getLogger().info(console + " ");
+        getLogger().info(" ");
         getLogger().info(console + "Loading in progress...");
-        getLogger().info(console + " ");
+        getLogger().info(" ");
 
         // Check for update
         getLogger().info(console + "Checking for update...");
-        getLogger().info(console + " ");
+        getLogger().info(" ");
         getLogger().info(console + "Version : "+this.getDescription().getVersion());
-        getLogger().info(console + " ");
+        getLogger().info(" ");
         new UpdateChecker(id).getVersion(version -> {
           if (this.getDescription().getVersion().equals(version)) {
               getLogger().info(console + "Up to date !");
-              getLogger().info(console + " ");
+              getLogger().info(" ");
           } else {
               getLogger().info(console + "New update is available : "+version);
-              getLogger().info(console + " ");
+              getLogger().info(" ");
           }
         });
 
         //Config Files
         getLogger().info(console + "Loading config files...");
-        getLogger().info(console + " ");
+        getLogger().info(" ");
         this.config = ConfigsManager.getConfig("config", this);
-        redisEnable = config.getBoolean("redis.use");
-        sqlEnable = config.getBoolean("mysql.use");
     }
 
     @Override
     public void onEnable()
     {
         INSTANCE = this;
-
-        if(sqlEnable)
-        {
-            String prefixTables = config.getString("mysql.prefixTables");
-            String profilesTable = config.getString("mysql.profilesTable");
-            String friendsTable = config.getString("mysql.friendsTable");
-            String teamsTable = config.getString("mysql.teamsTable");
-            String mailsTable = config.getString("mysql.mailsTable");
-
-            getLogger().info(console + " ");
-            getLogger().info(console + "Connecting to databases...");
-            getLogger().info(console + " ");
-            DBManager.initAllConnections();
-            createTables();
-        }
-
-        if(redisEnable)
-        {
-            getLogger().info(console + " ");
-            getLogger().info(console + "Connecting to redis servers...");
-            getLogger().info(console + " ");
-            RedisManager.initAllConnections();
-        }
-
-        getLogger().info(console + " ");
         getLogger().info(console + "Ready to use !");
+        getLogger().info(" ");
     }
 
     public static TMBungeeAPI getInstance() {return INSTANCE;}
@@ -112,48 +74,6 @@ public class TMBungeeAPI extends Plugin
     {
         getLogger().info(console + "Disabling in progress...");
         getLogger().info(console + " ");
-
-        if(sqlEnable) {
-            getLogger().info(console + "Disconnect from Mysql server...");
-            getLogger().info(console + " ");
-            DBManager.closeAllConnections();
-        }
-
-        if(redisEnable) {
-            getLogger().info(console + "Disconnect from Redisson server...");
-            getLogger().info(console + " ");
-            RedisManager.closeAllConnections();
-        }
-
         getLogger().info(console + "Disabled !");
-    }
-
-    private void createTables()
-    {
-        Map<String, List<String>> tables = new HashMap<>();
-
-        String prefixTables = config.getString("mysql.prefixTables");
-        String serversTable = config.getString("mysql.serversTable");
-        String mailsTable = config.getString("mysql.mailsTable");
-
-        List<String> listServersTable = Arrays.asList(
-                "id "+ SqlType.INT.sql()+" NOT NULL AUTO_INCREMENT PRIMARY KEY",
-                "name "+SqlType.VARCHAR.sql(),
-                "status "+SqlType.TINYINT.sql(1),
-                "ip "+SqlType.VARCHAR.sql(),
-                "port "+SqlType.INT.sql()
-        );
-
-        List<String> listMailsTable = Arrays.asList(
-                "sender "+SqlType.VARCHAR.sql(),
-                "target "+SqlType.VARCHAR.sql(),
-                "cc "+SqlType.VARCHAR.sql(),
-                "message "+SqlType.VARCHAR.sql()
-        );
-
-        tables.put(serversTable, listServersTable);
-        tables.put(mailsTable, listMailsTable);
-
-        SqlManager.createTables(prefixTables, tables);
     }
 }
