@@ -7,7 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="TM-API_1.19" />
-        <module name="TM-API" />
+        <module name="tm-api" />
       </profile>
     </annotationProcessing>
   </component>

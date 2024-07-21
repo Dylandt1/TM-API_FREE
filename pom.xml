@@ -6,9 +6,9 @@
 
     <!-- This plugin is made by PataPom - Licensed under GPL3 License. -->
 
-    <groupId>fr.tm-mods.1_19</groupId>
+    <groupId>fr.tmmods.1_19</groupId>
     <artifactId>tm-api</artifactId>
-    <version>3.2</version>
+    <version>3.3</version>
 
     <name>tm-api</name>
 
@@ -21,12 +21,12 @@
         <maven-shade.version>3.4.0</maven-shade.version>
 
         <minecraft.version>1.19</minecraft.version>
-        <spigot.version>1.19.2-R0.1-SNAPSHOT</spigot.version>
+        <spigot.version>1.19-R0.1-SNAPSHOT</spigot.version>
         <bungee.version>1.19-R0.1-SNAPSHOT</bungee.version>
         <bstats.version>3.0.1</bstats.version>
         <hikari.version>4.0.3</hikari.version>
         <slf4j.version>2.0.5</slf4j.version>
-        <redis.version>3.20.0</redis.version>
+        <redis.version>3.33.0</redis.version>
         <jackson.version>2.15.1</jackson.version>
     </properties>
 
