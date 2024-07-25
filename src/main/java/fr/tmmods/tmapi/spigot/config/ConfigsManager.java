@@ -52,8 +52,8 @@ public class ConfigsManager
             } catch(Exception e) {
                 e.printStackTrace();
             }
-            reload();
         }
+        reload();
     }
 
     public void reload()

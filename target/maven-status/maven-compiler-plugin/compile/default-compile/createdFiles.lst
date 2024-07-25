@@ -15,8 +15,8 @@ fr/tmmods/tmapi/spigot/packets/Reflection$DataType.class
 fr/tmmods/tmapi/spigot/config/ConfigsManager.class
 fr/tmmods/tmapi/data/manager/redis/RedisCredentials.class
 fr/tmmods/tmapi/spigot/gui/IGuiBuilder.class
-fr/tmmods/tmapi/data/manager/Json/SerializationManager.class
 fr/tmmods/tmapi/data/manager/sql/SqlManager.class
+fr/tmmods/tmapi/data/manager/Json/SerializationManager.class
 fr/tmmods/tmapi/exceptions/ManagerNotFoundException.class
 fr/tmmods/tmapi/data/manager/Json/LocationSerializer.class
 fr/tmmods/tmapi/data/manager/sql/DBCredentials.class

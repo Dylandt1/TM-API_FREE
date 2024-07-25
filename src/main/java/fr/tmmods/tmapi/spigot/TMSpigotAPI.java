@@ -3,7 +3,7 @@ package fr.tmmods.tmapi.spigot;
 import fr.tmmods.tmapi.spigot.config.ConfigsManager;
 import fr.tmmods.tmapi.data.manager.UpdateChecker;
 
-import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -25,43 +25,52 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class TMSpigotAPI extends JavaPlugin
 {
-    private final int id = 0;
-    private static TMSpigotAPI INSTANCE;
-    private final String console = "§f[§cTM§f-§bAPI§f] -> ";
+    private final int pluginId = 118339;
+    private boolean upToDate;
 
-    public Configuration config;
+    private static TMSpigotAPI INSTANCE;
+    private final String console = "[TM-API] -> ";
+
+    public YamlConfiguration config;
 
     @Override
     public void onLoad()
     {
-        getLogger().info(console + "§2Loading in progress...");
-
-        // Check for update
-        getLogger().info(console + "§6Checking for update...");
         getLogger().info(" ");
-        getLogger().info(console + "§6Version §f: §2"+this.getDescription().getVersion());
-        getLogger().info( " ");
-        new UpdateChecker(id).getVersion(version -> {
-            if (this.getDescription().getVersion().equals(version)) {
-                getLogger().info(console + "§2Up to date §c!");
-                getLogger().info(" ");
-            } else {
-                getLogger().info(console + "§6New update is available §f: §2"+version);
-                getLogger().info(" ");
-            }
-        });
+        getLogger().info(console + "Loading in progress...");
+        getLogger().info(" ");
 
         //Config Files
         getLogger().info(console + "Loading config files...");
         getLogger().info(" ");
         this.config = new ConfigsManager(this, "config").getConfig();
+
+        if(config.getBoolean("updates.checker"))
+        {
+            // UpdateChecker added by TM-API free software
+            getLogger().info(console + "# ----------{ UpdateChecker }---------- #");
+            getLogger().info(" ");
+            getLogger().info(console + "Version : "+this.getDescription().getVersion());
+            getLogger().info(" ");
+            new UpdateChecker(pluginId).getVersion(version -> {
+                if(this.getDescription().getVersion().equals(version)) {
+                    this.upToDate = true;
+                    getLogger().info(console + "Up to date !");
+                }else {
+                    this.upToDate = false;
+                    getLogger().info(console + "New update is available : "+version);
+                }
+                getLogger().info(" ");
+                getLogger().info(console + "# ---------- --------------- ---------- #");
+            });
+        }
     }
 
     @Override
     public void onEnable()
     {
         INSTANCE = this;
-        getLogger().info(console + "§2Ready to use §c!");
+        getLogger().info(console + "Ready to use !");
     }
 
     public static TMSpigotAPI getInstance() {return INSTANCE;}
@@ -69,8 +78,8 @@ public class TMSpigotAPI extends JavaPlugin
     @Override
     public void onDisable()
     {
-        getLogger().info(console + "§6Disabling in progress...");
+        getLogger().info(console + "Disabling in progress...");
         getLogger().info(" ");
-        getLogger().info(console + "§cDisabled !");
+        getLogger().info(console + "Disabled !");
     }
 }

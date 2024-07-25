@@ -25,9 +25,12 @@ import net.md_5.bungee.config.Configuration;
 
 public class TMBungeeAPI extends Plugin
 {
-    private final int id = 0;
+    private final int pluginId = 118339;
+    private boolean upToDate;
+
     private static TMBungeeAPI INSTANCE;
     public static String console = "[TM-API] -> ";
+
     private Configuration config;
 
     @Override
@@ -37,25 +40,30 @@ public class TMBungeeAPI extends Plugin
         getLogger().info(console + "Loading in progress...");
         getLogger().info(" ");
 
-        // Check for update
-        getLogger().info(console + "Checking for update...");
-        getLogger().info(" ");
-        getLogger().info(console + "Version : "+this.getDescription().getVersion());
-        getLogger().info(" ");
-        new UpdateChecker(id).getVersion(version -> {
-          if (this.getDescription().getVersion().equals(version)) {
-              getLogger().info(console + "Up to date !");
-              getLogger().info(" ");
-          } else {
-              getLogger().info(console + "New update is available : "+version);
-              getLogger().info(" ");
-          }
-        });
-
         //Config Files
         getLogger().info(console + "Loading config files...");
         getLogger().info(" ");
         this.config = ConfigsManager.getConfig("config", this);
+
+        if(config.getBoolean("updates.checker"))
+        {
+            // UpdateChecker added by TM-API free software
+            getLogger().info(console + "# ----------{ UpdateChecker }---------- #");
+            getLogger().info(" ");
+            getLogger().info(console + "Version : "+this.getDescription().getVersion());
+            getLogger().info(" ");
+            new UpdateChecker(pluginId).getVersion(version -> {
+                if(this.getDescription().getVersion().equals(version)) {
+                    this.upToDate = true;
+                    getLogger().info(console + "Up to date !");
+                }else {
+                    this.upToDate = false;
+                    getLogger().info(console + "New update is available : "+version);
+                }
+                getLogger().info(" ");
+                getLogger().info(console + "# ---------- --------------- ---------- #");
+            });
+        }
     }
 
     @Override
