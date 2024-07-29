@@ -25,5 +25,5 @@
 name: TM-API
 version: '${project.version}-${plugin.state}'
 main: fr.tmmods.tmapi.spigot.TMSpigotAPI
-api-version: 1.20
+api-version: ${minecraft.version}
 author: PataPom
