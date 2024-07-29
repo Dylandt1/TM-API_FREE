@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="TM-API_1.19" />
         <module name="tm-api" />
+        <module name="tm-api-free" />
       </profile>
     </annotationProcessing>
   </component>
