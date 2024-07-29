@@ -7,14 +7,14 @@
     <!-- This plugin is made by PataPom - Licensed under GPL3 License. -->
 
     <groupId>fr.tmmods.1_20</groupId>
-    <artifactId>tm-api</artifactId>
-    <version>3.3</version>
+    <artifactId>tm-api-free</artifactId>
+    <version>3.5</version>
 
     <name>tm-api</name>
 
     <!-- Maven variables properties -->
     <properties>
-        <plugin.state>SNAPSHOT</plugin.state>
+        <plugin.state>RELEASE</plugin.state>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-compiler.version>3.9.0</maven-compiler.version>

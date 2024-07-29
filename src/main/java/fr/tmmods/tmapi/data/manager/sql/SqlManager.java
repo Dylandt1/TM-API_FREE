@@ -57,14 +57,11 @@ public class SqlManager
 
      */
 
-    private final Connection connection;
+    private final SqlManager INSTANCE;
 
-    public SqlManager(Connection connection)
-    {
-        this.connection = connection;
-    }
+    public SqlManager() {INSTANCE = this;}
 
-    public void createTables(String prefixTables, Map<String, List<String>> tables)
+    public void createTables(String prefixTables, Map<String, List<String>> tables, Connection connection)
     {
         for(String tableName : tables.keySet())
         {
@@ -77,7 +74,13 @@ public class SqlManager
                 sb.append(list.get(i)).append(", ");
             }
 
-            update("CREATE TABLE IF NOT EXISTS "+prefixTables+tableName+" ("+sb.substring(0, sb.length() -2)+")");
+            update(connection, "CREATE TABLE IF NOT EXISTS "+prefixTables+tableName+" ("+sb.substring(0, sb.length() -2)+")");
+        }
+
+        try {
+            connection.close();
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -99,7 +102,7 @@ public class SqlManager
     SqlManager.createTable(prefixTables, tableName, entries);
 
      */
-    public void createTable(String prefixTables, String tableName, List<String> entries)
+    public void createTable(String prefixTables, String tableName, List<String> entries, Connection connection)
     {
         StringBuilder sb = new StringBuilder();
 
@@ -108,49 +111,52 @@ public class SqlManager
             sb.append(entries.get(i)).append(", ");
         }
 
-        update("CREATE TABLE IF NOT EXISTS "+prefixTables+tableName+" ("+sb.substring(0, sb.length() -2)+")");
+        update(connection, "CREATE TABLE IF NOT EXISTS "+prefixTables+tableName+" ("+sb.substring(0, sb.length() -2)+")");
+
+        try {
+            connection.close();
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // Send query type executeUpdate
-    public void update(String query)
+    public void update(Connection connection, String query)
     {
         try
         {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.executeUpdate();
             ps.close();
-            connection.close();
         } catch(SQLException e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
     // Send query type executeQuery
-    public void query(String query)
+    public void query(Connection connection, String query)
     {
         try
         {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.executeQuery();
             ps.close();
-            connection.close();
         }
         catch(SQLException e)
         {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
     // Send query type execute
-    public void execute(String query)
+    public void execute(Connection connection, String query)
     {
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.execute();
             ps.close();
-            connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }

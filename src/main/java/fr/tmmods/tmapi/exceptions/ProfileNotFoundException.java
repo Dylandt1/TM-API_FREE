@@ -2,6 +2,7 @@ package fr.tmmods.tmapi.exceptions;
 
 import java.util.UUID;
 
+@Deprecated
 public class ProfileNotFoundException extends Exception
 {
     public ProfileNotFoundException(UUID uuid)

@@ -27,6 +27,7 @@ public class TMBungeeAPI extends Plugin
 {
     private final int pluginId = 118339;
     private boolean upToDate;
+    private String newVersion;
 
     private static TMBungeeAPI INSTANCE;
     public static String console = "[TM-API] -> ";
@@ -58,6 +59,7 @@ public class TMBungeeAPI extends Plugin
                     getLogger().info(console + "Up to date !");
                 }else {
                     this.upToDate = false;
+                    this.newVersion = version;
                     getLogger().info(console + "New update is available : "+version);
                 }
                 getLogger().info(" ");
@@ -76,6 +78,8 @@ public class TMBungeeAPI extends Plugin
 
     public static TMBungeeAPI getInstance() {return INSTANCE;}
     public Configuration getConfig() {return config;}
+    public boolean isUpToDate() {return upToDate;}
+    public String getNewVersion() {return newVersion;}
 
     @Override
     public void onDisable()

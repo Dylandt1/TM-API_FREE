@@ -1,5 +1,6 @@
 package fr.tmmods.tmapi.spigot;
 
+import fr.tmmods.tmapi.spigot.listeners.PlayerListener;
 import fr.tmmods.tmapi.spigot.config.ConfigsManager;
 import fr.tmmods.tmapi.data.manager.UpdateChecker;
 
@@ -27,41 +28,42 @@ public class TMSpigotAPI extends JavaPlugin
 {
     private final int pluginId = 118339;
     private boolean upToDate;
+    private String newVersion;
 
     private static TMSpigotAPI INSTANCE;
-    private final String console = "[TM-API] -> ";
 
-    public YamlConfiguration config;
+    private YamlConfiguration config;
 
     @Override
     public void onLoad()
     {
         getLogger().info(" ");
-        getLogger().info(console + "Loading in progress...");
+        getLogger().info("Loading in progress...");
         getLogger().info(" ");
 
         //Config Files
-        getLogger().info(console + "Loading config files...");
+        getLogger().info("Loading config files...");
         getLogger().info(" ");
         this.config = new ConfigsManager(this, "config").getConfig();
 
         if(config.getBoolean("updates.checker"))
         {
             // UpdateChecker added by TM-API free software
-            getLogger().info(console + "# ----------{ UpdateChecker }---------- #");
+            getLogger().info("# ----------{ UpdateChecker }---------- #");
             getLogger().info(" ");
-            getLogger().info(console + "Version : "+this.getDescription().getVersion());
+            getLogger().info("Version : "+this.getDescription().getVersion());
             getLogger().info(" ");
             new UpdateChecker(pluginId).getVersion(version -> {
                 if(this.getDescription().getVersion().equals(version)) {
                     this.upToDate = true;
-                    getLogger().info(console + "Up to date !");
+                    getLogger().info("Up to date !");
                 }else {
                     this.upToDate = false;
-                    getLogger().info(console + "New update is available : "+version);
+                    this.newVersion = version;
+                    getLogger().info("New update is available : "+version);
                 }
                 getLogger().info(" ");
-                getLogger().info(console + "# ---------- --------------- ---------- #");
+                getLogger().info("# ---------- --------------- ---------- #");
             });
         }
     }
@@ -70,16 +72,24 @@ public class TMSpigotAPI extends JavaPlugin
     public void onEnable()
     {
         INSTANCE = this;
-        getLogger().info(console + "Ready to use !");
+
+        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+
+        getLogger().info(" ");
+        getLogger().info("Ready to use !");
     }
 
     public static TMSpigotAPI getInstance() {return INSTANCE;}
+    public int getPluginId() {return pluginId;}
+    public YamlConfiguration getConfig() {return config;}
+    public boolean isUpToDate() {return upToDate;}
+    public String getNewVersion() {return newVersion;}
 
     @Override
     public void onDisable()
     {
-        getLogger().info(console + "Disabling in progress...");
+        getLogger().info("Disabling in progress...");
         getLogger().info(" ");
-        getLogger().info(console + "Disabled !");
+        getLogger().info("Disabled !");
     }
 }
